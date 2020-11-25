@@ -1,9 +1,9 @@
 package android.kezdi.ors
 
+import android.kezdi.ors.Fragments.Splash
 import android.kezdi.ors.databinding.ActivityMainBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,6 +11,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        //val view = binding.root //Nem tudom kell-e
+        setContentView(binding.root)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainer.id,Splash())
+            .commit()
     }
+
 }
