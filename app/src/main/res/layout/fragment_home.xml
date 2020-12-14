@@ -24,13 +24,12 @@
             android:id="@+id/searchbar"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
             android:iconifiedByDefault="false"
-            android:queryHint="Search"
-            app:layout_constraintEnd_toStartOf="@+id/city_spinner"
+            android:queryHint="Search restaurant"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </SearchView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -39,16 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile"
-            tools:listitem="@layout/item_layout"/>
-
-        <Spinner
-            android:id="@+id/city_spinner"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/searchbar" />
+            app:layout_constraintTop_toBottomOf="@+id/profile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
