@@ -1,16 +1,11 @@
 package android.kezdi.ors
 
-import android.kezdi.ors.Fragments.Home
-import android.kezdi.ors.Fragments.Splash
-import android.kezdi.ors.Networking.HTTPApiService
-import android.kezdi.ors.Networking.Models.APIStats
-import android.kezdi.ors.Networking.Models.Cities
-import android.kezdi.ors.Networking.Models.Restaurant
-import android.kezdi.ors.Networking.Models.Restaurants
+import android.kezdi.ors.Fragments.*
+import android.kezdi.ors.Networking.Models.*
 import android.kezdi.ors.Networking.WEB
 import android.kezdi.ors.databinding.ActivityMainBinding
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
@@ -19,19 +14,23 @@ import retrofit2.Response
 
 ///TMP https://developer.android.com/codelabs/kotlin-android-training-internet-data#0
 
+/**
+ * Nettel szorakozni nagyon necces az API 29 ota, ezert ki is hagytam
+ * https://medium.com/swlh/how-to-check-internet-connection-on-android-q-ea7c5a103e3
+*/
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private val splash_fragment: Splash = Splash()
     private val home_fragment: Home = Home()
-    //private val profile_fragment: Profile = Profile()
+    private val profile_fragment: Profile = Profile()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        //val view = binding.root //Nem tudom kell-e
         setContentView(binding.root)
 
         supportFragmentManager
@@ -39,48 +38,61 @@ class MainActivity : AppCompatActivity() {
             .replace(binding.fragmentContainer.id, splash_fragment)
             .commit()
 
-        //WEB().create(HTTPApiService::class.java).apiStats().enqueue(apistats)
-        //WEB().create(HTTPApiService::class.java).getRestaurant(107257).enqueue(restaurant)
-        WEB().create(HTTPApiService::class.java).findRestaurants(city="Chicago",name="steak").enqueue(restaurants)
+        WEB().apiStats().enqueue(opentable)
+
+        Handler().postDelayed({ //Ha tul sokat a Splash-en van/ott ragadt tovabb tobja a Homer-a
+            if (supportFragmentManager.fragments.last() == splash_fragment){
+                Toast.makeText(baseContext, "Váratlan hiba..." ,Toast.LENGTH_LONG).show()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.fragmentContainer.id, home_fragment)
+                    .commit()
+            }
+        },15000)
     }
 
+    private fun loadHomeWithDelay() {
+        Handler().postDelayed({
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.fragmentContainer.id, home_fragment)
+                    .commit()
+        },1500)
+    }
 
-    private val apistats = object: Callback<APIStats> {
-        override fun onFailure(call: Call<APIStats>, t: Throwable) {
-            Toast.makeText(baseContext, "APIStats FAIL", Toast.LENGTH_LONG).show()
+    private val opentable = object: Callback<String> {    //Szándékosan túltoltam a KOTLIN-kodást
+        override fun onResponse(call: Call<String>, response: Response<String>) = when(response.code()){
+            in 200..299 -> WEB().getCities().enqueue(cities)
+            else -> WEB.tryBackup().apiStats().enqueue(ratpark)
         }
-        override fun onResponse(call: Call<APIStats>, response: Response<APIStats>) {
-            Toast.makeText(baseContext, response.body()!!.toString() ,Toast.LENGTH_LONG).show()
+        override fun onFailure(call: Call<String>, t: Throwable) = WEB.tryBackup().apiStats().enqueue(ratpark)
+    }
 
-            //WEB().create(HTTPApiService::class.java).getCities().enqueue(cities)
+    private val ratpark = object: Callback<String> {
+        override fun onResponse(call: Call<String>, response: Response<String>) = when (response.code()) {
+            in 200..299 ->WEB().getCities().enqueue(cities)
+            else -> loadHomeWithDelay()
         }
+        override fun onFailure(call: Call<String>, t: Throwable) = loadHomeWithDelay()
     }
 
     private val cities = object: Callback<Cities> {
-        override fun onFailure(call: Call<Cities>, t: Throwable) {
-            Toast.makeText(baseContext, "Cities FAIL", Toast.LENGTH_LONG).show()
+        override fun onResponse(call: Call<Cities>, response: Response<Cities>){
+            if(response.code() in 200..299) home_fragment.cities.addAll(response.body()!!.cities)
+            loadHomeWithDelay()
         }
-        override fun onResponse(call: Call<Cities>, response: Response<Cities>) {
-            Toast.makeText(baseContext, response.body()!!.toString() ,Toast.LENGTH_LONG).show()
-        }
+        override fun onFailure(call: Call<Cities>, t: Throwable) = loadHomeWithDelay()
     }
+    fun showDetails(id: Int) = supportFragmentManager
+        .beginTransaction()
+        .addToBackStack(null)
+        .replace(binding.fragmentContainer.id, DetailFragment(id) )
+        .commit()
 
-    private val restaurant = object: Callback<Restaurant>{
-        override fun onFailure(call: Call<Restaurant>, t: Throwable) {
-            Toast.makeText(baseContext, "Restaurant FAIL", Toast.LENGTH_LONG).show()
-        }
-        override fun onResponse(call: Call<Restaurant>, response: Response<Restaurant>) {
-            Toast.makeText(baseContext, response.body()!!.toString() ,Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private val restaurants = object: Callback<Restaurants>{
-        override fun onFailure(call: Call<Restaurants>, t: Throwable) {
-            Toast.makeText(baseContext, "Restaurants FAIL", Toast.LENGTH_LONG).show()
-        }
-        override fun onResponse(call: Call<Restaurants>, response: Response<Restaurants>) {
-            Toast.makeText(baseContext, response.body()!!.toString() ,Toast.LENGTH_LONG).show()
-        }
-    }
+    fun openProfile() = supportFragmentManager
+        .beginTransaction()
+        .addToBackStack(null)
+        .replace(binding.fragmentContainer.id, profile_fragment)
+        .commit()
 
 }
