@@ -4,8 +4,4 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="applogo">AppLogo</string>
     <string name="profilepic">ProfilePic</string>
-    <string name="title">TITLE</string>
-    <string name="adress">ADRESS</string>
-    <string name="restaurant_profile">restaurant profile</string>
-    <string name="price_4">$$$$</string>
 </resources>
