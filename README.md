@@ -9,6 +9,7 @@ Kotlinban (1.4.20 verzió, 4.1.1 gradle) megírt alkalmazás.
 - [x] Egy étterem részletes leírása, amennyiben kiválasztjuk az előző menüpontban
 - [x] Profil, lokális adatbázis segítségével megvalósítva tárolva (profilkép feltöltése, felhaszálói adatok módosítása)
 - [x] Kedvencek kezelése
+- [x] Többszörös API kopatibilitás ( +saját API írása - PHP )
 
 ## Felhasznált technológiák, dependenciák
 * Glide 4.11.0 
