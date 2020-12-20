@@ -6,8 +6,9 @@ Kotlinban (1.4.20 verzió, 4.1.1 gradle) megírt alkalmazás.
 ## Követelmények/funkcionalitások
 - [x] Splash screen
 - [x] "Főoldal" az éttermekkel, illetve keresés
-- [ ] Egy étterem részletes leírása, amennyiben kiválasztjuk az előző menüpontban
-- [ ] Profil, lokális adatbázis segítségével megvalósítva tárolva
+- [x] Egy étterem részletes leírása, amennyiben kiválasztjuk az előző menüpontban
+- [x] Profil, lokális adatbázis segítségével megvalósítva tárolva (profilkép feltöltése, felhaszálói adatok módosítása)
+- [x] Kedvencek kezelése
 
 ## Felhasznált technológiák, dependenciák
 * Glide 4.11.0 
