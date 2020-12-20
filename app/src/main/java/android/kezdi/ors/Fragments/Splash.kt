@@ -13,13 +13,11 @@ import android.view.animation.AnimationUtils
 //https://www.youtube.com/watch?v=WyAzD7RMwHM -- ProgressBar
 
 class Splash : Fragment() {
-
     private lateinit var binding: FragmentSplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentSplashBinding.inflate(layoutInflater)
-
         binding.logo.animation = AnimationUtils.loadAnimation(context, R.anim.logo_animation)
     }
 
@@ -27,7 +25,6 @@ class Splash : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = binding.root
-
 
 }
 

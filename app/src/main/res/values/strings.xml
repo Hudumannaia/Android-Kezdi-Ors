@@ -8,4 +8,5 @@
     <string name="adress">ADRESS</string>
     <string name="restaurant_profile">restaurant profile</string>
     <string name="price_4">$$$$</string>
+    <string name="make_favourite">make favourite</string>
 </resources>

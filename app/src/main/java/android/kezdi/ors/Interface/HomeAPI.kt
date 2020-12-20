@@ -1,25 +1,23 @@
-package android.kezdi.ors.Networking
+package android.kezdi.ors.Interface
 
-import android.kezdi.ors.Networking.Models.APIStats
-import android.kezdi.ors.Networking.Models.Cities
-import android.kezdi.ors.Networking.Models.Restaurant
-import android.kezdi.ors.Networking.Models.Restaurants
+import android.kezdi.ors.Models.Cities
+import android.kezdi.ors.Models.Restaurant
+import android.kezdi.ors.Models.Restaurants
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.http.Path
 
-interface RatparkAPI : HTTPS_API {
+interface HomeAPI : HTTPSAPI {
 
-    @GET("/")
+    @GET("/api/stat.php")
     override fun apiStats(): Call<String>
 
-    @GET("/cities")
+    @GET("/api/cities.php")
     override fun getCities(): Call<Cities>
 
-    @GET("/restaurants")
+    @GET("/api/restaurants.php")
     override fun findRestaurants(@Query("price") price: String,
-                                 @Query("name") name: String,
+                                 @Query("srcfor") name: String,
                                  @Query("address") address: String,
                                  @Query("state") state: String,
                                  @Query("city") city: String,
@@ -29,7 +27,6 @@ interface RatparkAPI : HTTPS_API {
                                  @Query("per_page") per_page: String
     ): Call<Restaurants>
 
-    @GET("/restaurants/{id}")
-    override fun getRestaurant(@Path("id") id: Int): Call<Restaurant>
-
+    @GET("/api/restaurants.php")
+    override fun getRestaurant(@Query("id") id: Int): Call<Restaurant>
 }

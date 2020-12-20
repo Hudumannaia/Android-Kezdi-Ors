@@ -2,7 +2,7 @@ package android.kezdi.ors.Adapter
 
 import android.kezdi.ors.Interface.ILoadMore
 import android.kezdi.ors.MainActivity
-import android.kezdi.ors.Networking.Models.Restaurant
+import android.kezdi.ors.Models.Restaurant
 import android.kezdi.ors.R
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +24,12 @@ class MyAdapter(recyclerView: RecyclerView, private val activity: MainActivity, 
         val rTitle: TextView = itemView.findViewById(R.id.rTitle)
         val rAddress: TextView = itemView.findViewById(R.id.rAddress)
         val rPrice: TextView = itemView.findViewById(R.id.rPrice)
+        val myFavourite: ImageView = itemView.findViewById(R.id.myFavourite)
         val view: View = itemView
     }
 
-    val VIEW_TYPE_ITEM: Int = 0
-    val VIEW_TYPE_LOADING: Int = 1
+    private val VIEWTYPEITEM: Int = 0
+    private val VIEWTYPELOADING: Int = 1
 
     private var loadMore: ILoadMore? = null
     private var isLoading: Boolean = false
@@ -48,13 +49,12 @@ class MyAdapter(recyclerView: RecyclerView, private val activity: MainActivity, 
     }
 
     override fun getItemViewType(position: Int) = when(items[position]) {
-        is Restaurant -> VIEW_TYPE_ITEM
-        null -> VIEW_TYPE_LOADING   // "megduplaztam" a sort a biztonsag kedveert, de azert TODO
-        else -> VIEW_TYPE_LOADING
+        is Restaurant -> VIEWTYPEITEM
+        else -> VIEWTYPELOADING
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when(viewType){
-        VIEW_TYPE_ITEM -> ItemViewHolder( LayoutInflater.from(parent.context)
+        VIEWTYPEITEM -> ItemViewHolder( LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_layout, parent, false) )
         else -> LoadingViewHolder( LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_loading, parent, false) )
@@ -69,6 +69,8 @@ class MyAdapter(recyclerView: RecyclerView, private val activity: MainActivity, 
                         .load(item.image_url)
                         .centerCrop()
                         .into(rPic)
+                rPic.setOnClickListener { activity.clickFavourite(item, myFavourite) }
+                activity.setFavouriteIndicator(item.id, myFavourite)
                 rTitle.text = item.name
                 rAddress.text = item.address
                 rPrice.text = "$".repeat(item.price)

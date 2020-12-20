@@ -103,6 +103,7 @@
             android:id="@+id/plus_or_favourit"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/r_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/r_pic"

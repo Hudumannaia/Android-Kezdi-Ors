@@ -1,4 +1,4 @@
-package android.kezdi.ors.Networking.Models
+package android.kezdi.ors.Models
 
 data class Restaurant(  var id: Int = 0,
                         var name: String = "",

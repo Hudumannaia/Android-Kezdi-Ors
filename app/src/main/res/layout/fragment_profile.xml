@@ -10,6 +10,15 @@
         tools:context=".Fragments.Profile">
 
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0.01dp"
+            android:layout_height="0.01dp"
+            android:background="@android:drawable/screen_background_light_transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/back_button"
             android:layout_width="50dp"
@@ -32,55 +41,72 @@
 
         <EditText
             android:id="@+id/user_name"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
             android:ems="10"
+            android:hint="NAME"
             android:inputType="textPersonName"
-            android:text="NAME"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
 
         <EditText
             android:id="@+id/user_address"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="ADDRESS"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="ADDRESS"
+            android:inputType="textPostalAddress"
+            app:layout_constraintEnd_toStartOf="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
         <EditText
             android:id="@+id/user_phone_number"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="PHONE NUMBER"
+            android:hint="PHONE NUMBER"
+            android:inputType="phone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_address" />
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
-        <ListView
+        <EditText
+            android:id="@+id/user_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:hint="EMAIL"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favourites"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_phone_number" />
+            app:layout_constraintTop_toBottomOf="@+id/user_address"
+            tools:listitem="@layout/item_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

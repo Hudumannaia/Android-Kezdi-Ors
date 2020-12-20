@@ -1,12 +1,11 @@
-package android.kezdi.ors.Networking
+package android.kezdi.ors.Interface
 
-import android.kezdi.ors.Networking.Models.APIStats
-import android.kezdi.ors.Networking.Models.Cities
-import android.kezdi.ors.Networking.Models.Restaurant
-import android.kezdi.ors.Networking.Models.Restaurants
+import android.kezdi.ors.Models.Cities
+import android.kezdi.ors.Models.Restaurant
+import android.kezdi.ors.Models.Restaurants
 import retrofit2.Call
 
-interface HTTPS_API {
+interface HTTPSAPI {
 
     fun apiStats(): Call<String>
 

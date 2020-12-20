@@ -2,16 +2,15 @@ package android.kezdi.ors.Fragments
 
 import android.annotation.SuppressLint
 import android.kezdi.ors.MainActivity
-import android.kezdi.ors.Networking.Models.Cities
-import android.kezdi.ors.Networking.Models.Restaurant
-import android.kezdi.ors.Networking.WEB
+import android.kezdi.ors.Models.Restaurant
+import android.kezdi.ors.API
 import android.kezdi.ors.databinding.FragmentDetailBinding
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.kezdi.ors.databinding.FragmentProfileBinding
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,12 +22,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailFragment(val rId: Int) : Fragment(), OnMapReadyCallback {
+class DetailFragment(private val rId: Int) : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentDetailBinding
 
     private lateinit var activity: MainActivity
-    private val MAPVIEW_BINDLE_KEY: String = "map $rId"
+    private val mapViewBundleKey: String = "map $rId"
     private var location = LatLng(0.0, 0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +35,11 @@ class DetailFragment(val rId: Int) : Fragment(), OnMapReadyCallback {
         binding = FragmentDetailBinding.inflate(layoutInflater)
         activity = getActivity() as MainActivity
 
-        WEB().getRestaurant(rId).enqueue(restaurant)
+        API()!!.getRestaurant(rId).enqueue(restaurant)
 
         binding.backButton.setOnClickListener { activity.onBackPressed() }
 
-        binding.mapView.onCreate(savedInstanceState?.getBundle(MAPVIEW_BINDLE_KEY))
+        binding.mapView.onCreate(savedInstanceState?.getBundle(mapViewBundleKey))
     }
 
     override fun onCreateView(
@@ -78,8 +77,8 @@ class DetailFragment(val rId: Int) : Fragment(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        with(outState.getBundle(MAPVIEW_BINDLE_KEY)?:Bundle()){
-            outState.putBundle(MAPVIEW_BINDLE_KEY, this)
+        with(outState.getBundle(mapViewBundleKey)?:Bundle()){
+            outState.putBundle(mapViewBundleKey, this)
             binding.mapView.onSaveInstanceState(this)
         }
     }

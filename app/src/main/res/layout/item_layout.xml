@@ -66,5 +66,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/rPic"
             app:layout_constraintTop_toBottomOf="@+id/rTitle" />
+
+        <ImageView
+            android:id="@+id/myFavourite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/make_favourite"
+            app:layout_constraintBottom_toBottomOf="@+id/rPic"
+            app:layout_constraintEnd_toEndOf="@+id/rPic"
+            app:srcCompat="@android:drawable/btn_star_big_off" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
